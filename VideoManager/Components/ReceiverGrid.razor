@@ -1,0 +1,37 @@
+@page "/receivers"
+@inject VideoMatrix.Services.DeviceService DeviceService
+
+<h3>Receivers</h3>
+
+@if (receivers == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="grid">
+        @foreach (var receiver in receivers)
+        {
+            <div class="grid-item">
+                <h4>@receiver.Name (@receiver.IpAddress)</h4>
+                @if (receiver.Status == DeviceStatus.On)
+                {
+                    <img src="@receiver.ImageUrl" alt="Receiving image" />
+                }
+                else
+                {
+                    <p>Status: @receiver.Status</p>
+                }
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Receiver> receivers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        receivers = await DeviceService.GetReceiversAsync();
+    }
+}

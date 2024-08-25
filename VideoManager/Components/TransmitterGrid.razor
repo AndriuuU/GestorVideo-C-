@@ -1,0 +1,37 @@
+@page "/transmitters"
+@inject VideoMatrix.Services.DeviceService DeviceService
+
+<h3>Transmitters</h3>
+
+@if (transmitters == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="grid">
+        @foreach (var transmitter in transmitters)
+        {
+            <div class="grid-item">
+                <h4>@transmitter.Name (@transmitter.IpAddress)</h4>
+                @if (transmitter.Status == DeviceStatus.On)
+                {
+                    <img src="@transmitter.ImageUrl" alt="Transmitting image" />
+                }
+                else
+                {
+                    <p>Status: @transmitter.Status</p>
+                }
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Transmitter> transmitters;
+
+    protected override async Task OnInitializedAsync()
+    {
+        transmitters = await DeviceService.GetTransmittersAsync();
+    }
+}

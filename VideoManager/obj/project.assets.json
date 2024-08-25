@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "M:\\Andres\\Emtrevista\\GestorDeVideo\\VideoManager\\VideoManager.csproj",
+      "projectUniqueName": "M:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\VideoManager.csproj",
       "projectName": "VideoManager",
-      "projectPath": "M:\\Andres\\Emtrevista\\GestorDeVideo\\VideoManager\\VideoManager.csproj",
+      "projectPath": "M:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\VideoManager.csproj",
       "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
-      "outputPath": "M:\\Andres\\Emtrevista\\GestorDeVideo\\VideoManager\\obj\\",
+      "outputPath": "M:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config"

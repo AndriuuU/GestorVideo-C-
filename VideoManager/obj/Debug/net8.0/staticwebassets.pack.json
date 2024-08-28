@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\VideoManager.bundle.scp.css",
+      "PackagePath": "staticwebassets\\VideoManager.bundle.scp.css"
+    },
+    {
+      "Id": "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.VideoManager.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.VideoManager.props",
+      "PackagePath": "build\\VideoManager.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.VideoManager.props",
+      "PackagePath": "buildMultiTargeting\\VideoManager.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.VideoManager.props",
+      "PackagePath": "buildTransitive\\VideoManager.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,36 +1,59 @@
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 using VideoMatrix.Models;
 
 namespace VideoMatrix.Data
 {
-    public class VideoMatrixDbContext : DbContext
+    public class DataAccess
     {
-        public DbSet<Device> Devices { get; set; }
-        public DbSet<Profile> Profiles { get; set; }
+        private readonly string _connectionString;
 
-        public VideoMatrixDbContext(DbContextOptions<VideoMatrixDbContext> options) : base(options) { }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        public DataAccess(string connectionString)
         {
-            modelBuilder.Entity<Device>()
-                .HasDiscriminator<string>("DeviceType")
-                .HasValue<Transmitter>("Transmitter")
-                .HasValue<Receiver>("Receiver");
+            _connectionString = connectionString;
+        }
 
-            // Seed data
-            modelBuilder.Entity<Transmitter>().HasData(
-                new Transmitter { Id = 1, Name = "Transmitter 1", IpAddress = "192.168.1.1", Status = DeviceStatus.On, ImageUrl = "https://via.placeholder.com/150" },
-                new Transmitter { Id = 2, Name = "Transmitter 2", IpAddress = "192.168.1.2", Status = DeviceStatus.Standby, ImageUrl = "https://via.placeholder.com/150" }
-            );
+        private SqlConnection GetConnection()
+        {
+            return new SqlConnection(_connectionString);
+        }
 
-            modelBuilder.Entity<Receiver>().HasData(
-                new Receiver { Id = 3, Name = "Receiver 1", IpAddress = "192.168.1.3", Status = DeviceStatus.Off, ImageUrl = "https://via.placeholder.com/150" },
-                new Receiver { Id = 4, Name = "Receiver 2", IpAddress = "192.168.1.4", Status = DeviceStatus.On, ImageUrl = "https://via.placeholder.com/150" }
-            );
+        // Método para ejecutar consultas que retornan múltiples filas (SELECT)
+        public async Task<List<T>> ExecuteQueryAsync<T>(string query, Func<SqlDataReader, T> mapFunction)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand(query, connection))
+            {
+                await connection.OpenAsync();
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    var results = new List<T>();
+                    while (await reader.ReadAsync())
+                    {
+                        results.Add(mapFunction(reader));
+                    }
+                    return results;
+                }
+            }
+        }
 
-            modelBuilder.Entity<Profile>().HasData(
-                new Profile { Id = 1, Name = "Default Profile" }
-            );
+        // Método para ejecutar comandos INSERT, UPDATE, DELETE
+        public async Task ExecuteNonQueryAsync(string query, SqlParameter[] parameters = null)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand(query, connection))
+            {
+                if (parameters != null)
+                {
+                    command.Parameters.AddRange(parameters);
+                }
+
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
+            }
         }
     }
 }

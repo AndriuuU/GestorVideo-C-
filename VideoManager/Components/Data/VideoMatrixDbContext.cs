@@ -41,7 +41,7 @@ namespace VideoMatrix.Data
         }
 
         // Método para ejecutar comandos INSERT, UPDATE, DELETE
-        public async Task ExecuteNonQueryAsync(string query, SqlParameter[] parameters = null)
+        public async Task ExecuteNonQueryAsync(string query, SqlParameter[]? parameters = null)
         {
             using (var connection = GetConnection())
             using (var command = new SqlCommand(query, connection))

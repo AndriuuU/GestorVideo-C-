@@ -1,15 +1,24 @@
 using VideoManager.Components;
 using VideoMatrix.Data; // Importa la clase DatabaseInitializer
+using VideoMatrix.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Agregar la cadena de conexión a los servicios
+string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Registro de DatabaseInitializer
+builder.Services.AddSingleton(new DatabaseInitializer(connectionString));
+
+// Registro de DeviceService
+builder.Services.AddScoped<DeviceService>(provider =>
+{
+    return new DeviceService(connectionString); // Usa la misma cadena de conexión
+});
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
-// Agregar la cadena de conexión a los servicios
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddSingleton(new DatabaseInitializer(connectionString));
 
 var app = builder.Build();
 
@@ -24,7 +33,6 @@ using (var scope = app.Services.CreateScope())
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

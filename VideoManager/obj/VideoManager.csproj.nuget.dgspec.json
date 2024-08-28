@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\VideoManager.csproj": {}
+    "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\VideoManager.csproj": {}
   },
   "projects": {
-    "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\VideoManager.csproj": {
+    "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\VideoManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\VideoManager.csproj",
+        "projectUniqueName": "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\VideoManager.csproj",
         "projectName": "VideoManager",
-        "projectPath": "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\VideoManager.csproj",
+        "projectPath": "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\VideoManager.csproj",
         "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
-        "outputPath": "m:\\Andres\\Emtrevista\\GestorDeVideo\\GestorVideo-C-\\VideoManager\\obj\\",
+        "outputPath": "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -46,6 +46,10 @@
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.2.2, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[9.0.0, )"
             },
             "System.Data.SqlClient": {
               "target": "Package",

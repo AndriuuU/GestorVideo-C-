@@ -3,21 +3,12 @@
 @using VideoMatrix.Services
 @inject DeviceService DeviceService
 
-<PageTitle>Dispositivos</PageTitle>
 <h3>Dispositivos</h3>
 
 <div class="device-grid">
     <h4>Transmisores</h4>
     <div class="grid">
-        @if (transmitters == null)
-        {
-            <p>Cargando transmisores...</p>
-        }
-        else if (!transmitters.Any())
-        {
-            <p>No se encontraron transmisores.</p>
-        }
-        else
+        @if (transmitters != null)
         {
             @foreach (var transmitter in transmitters)
             {
@@ -34,19 +25,15 @@
                 </div>
             }
         }
+        else
+        {
+            <p>Cargando...</p>
+        }
     </div>
 
     <h4>Receptores</h4>
     <div class="grid">
-        @if (receivers == null)
-        {
-            <p>Cargando receptores...</p>
-        }
-        else if (!receivers.Any())
-        {
-            <p>No se encontraron receptores.</p>
-        }
-        else
+        @if (receivers != null)
         {
             @foreach (var receiver in receivers)
             {
@@ -63,6 +50,10 @@
                 </div>
             }
         }
+        else
+        {
+            <p>Cargando...</p>
+        }
     </div>
 </div>
 
@@ -72,15 +63,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            transmitters = await DeviceService.GetTransmittersAsync();
-            receivers = await DeviceService.GetReceiversAsync();
-        }
-        catch (Exception ex)
-        {
-            // Manejo de errores
-            Console.WriteLine($"Error al inicializar datos: {ex.Message}");
-        }
+        transmitters = await DeviceService.GetTransmittersAsync();
+        receivers = await DeviceService.GetReceiversAsync();
     }
 }

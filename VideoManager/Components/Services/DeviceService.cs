@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using VideoMatrix.Models;
 using VideoMatrix.Data;
+using MySql.Data.MySqlClient; // Asegúrate de que esta línea esté presente
 
 namespace VideoMatrix.Services
 {
@@ -35,45 +34,7 @@ namespace VideoMatrix.Services
             return await _dataAccess.ExecuteQueryAsync(query, reader => (Receiver)MapToDevice(reader));
         }
 
-        public async Task AddDeviceAsync(Device device)
-        {
-            string query = "INSERT INTO Devices (Name, IpAddress, Status, ImageUrl, DeviceType) VALUES (@Name, @IpAddress, @Status, @ImageUrl, @DeviceType)";
-            SqlParameter[] parameters = {
-                new SqlParameter("@Name", device.Name),
-                new SqlParameter("@IpAddress", device.IpAddress),
-                new SqlParameter("@Status", device.Status),
-                new SqlParameter("@ImageUrl", device.ImageUrl),
-                new SqlParameter("@DeviceType", device.GetType().Name)
-            };
-
-            await _dataAccess.ExecuteNonQueryAsync(query, parameters);
-        }
-
-        public async Task UpdateDeviceAsync(Device device)
-        {
-            string query = "UPDATE Devices SET Name = @Name, IpAddress = @IpAddress, Status = @Status, ImageUrl = @ImageUrl WHERE Id = @Id";
-            SqlParameter[] parameters = {
-                new SqlParameter("@Name", device.Name),
-                new SqlParameter("@IpAddress", device.IpAddress),
-                new SqlParameter("@Status", device.Status),
-                new SqlParameter("@ImageUrl", device.ImageUrl),
-                new SqlParameter("@Id", device.Id)
-            };
-
-            await _dataAccess.ExecuteNonQueryAsync(query, parameters);
-        }
-
-        public async Task DeleteDeviceAsync(int id)
-        {
-            string query = "DELETE FROM Devices WHERE Id = @Id";
-            SqlParameter[] parameters = {
-                new SqlParameter("@Id", id)
-            };
-
-            await _dataAccess.ExecuteNonQueryAsync(query, parameters);
-        }
-
-        private Device MapToDevice(SqlDataReader reader)
+        private Device MapToDevice(MySqlDataReader reader)
         {
             var deviceType = reader["DeviceType"].ToString();
             Device device;

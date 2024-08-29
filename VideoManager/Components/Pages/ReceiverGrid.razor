@@ -1,38 +1,86 @@
-@page "/receivers"
-@using VideoMatrix.Models 
-@inject VideoMatrix.Services.DeviceService DeviceService
+@page "/devices"
+@using VideoMatrix.Models
+@using VideoMatrix.Services
+@inject DeviceService DeviceService
 
-<h3>Receivers</h3>
+<PageTitle>Dispositivos</PageTitle>
+<h3>Dispositivos</h3>
 
-@if (receivers == null)
-{
-    <p>Loading...</p>
-}
-else
-{
+<div class="device-grid">
+    <h4>Transmisores</h4>
     <div class="grid">
-        @foreach (var receiver in receivers)
+        @if (transmitters == null)
         {
-            <div class="grid-item">
-                <h4>@receiver.Name (@receiver.IpAddress)</h4>
-                @if (receiver.Status == DeviceStatus.On)
-                {
-                    <img src="@receiver.ImageUrl" alt="Receiving image" />
-                }
-                else
-                {
-                    <p>Status: @receiver.Status</p>
-                }
-            </div>
+            <p>Cargando transmisores...</p>
+        }
+        else if (!transmitters.Any())
+        {
+            <p>No se encontraron transmisores.</p>
+        }
+        else
+        {
+            @foreach (var transmitter in transmitters)
+            {
+                <div class="grid-item">
+                    <h5>@transmitter.Name (@transmitter.IpAddress)</h5>
+                    @if (transmitter.Status == DeviceStatus.On)
+                    {
+                        <img src="@transmitter.ImageUrl" alt="Transmitter Image" />
+                    }
+                    else
+                    {
+                        <p>Estado: @transmitter.Status</p>
+                    }
+                </div>
+            }
         }
     </div>
-}
+
+    <h4>Receptores</h4>
+    <div class="grid">
+        @if (receivers == null)
+        {
+            <p>Cargando receptores...</p>
+        }
+        else if (!receivers.Any())
+        {
+            <p>No se encontraron receptores.</p>
+        }
+        else
+        {
+            @foreach (var receiver in receivers)
+            {
+                <div class="grid-item">
+                    <h5>@receiver.Name (@receiver.IpAddress)</h5>
+                    @if (receiver.Status == DeviceStatus.On)
+                    {
+                        <img src="@receiver.ImageUrl" alt="Receiver Image" />
+                    }
+                    else
+                    {
+                        <p>Estado: @receiver.Status</p>
+                    }
+                </div>
+            }
+        }
+    </div>
+</div>
 
 @code {
+    private List<Transmitter> transmitters;
     private List<Receiver> receivers;
 
     protected override async Task OnInitializedAsync()
     {
-        receivers = await DeviceService.GetReceiversAsync();
+        try
+        {
+            transmitters = await DeviceService.GetTransmittersAsync();
+            receivers = await DeviceService.GetReceiversAsync();
+        }
+        catch (Exception ex)
+        {
+            // Manejo de errores
+            Console.WriteLine($"Error al inicializar datos: {ex.Message}");
+        }
     }
 }

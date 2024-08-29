@@ -18,11 +18,12 @@ namespace VideoMatrix.Models
 
     public class Transmitter : Device
     {
-        // Propiedades adicionales si es necesario
+        public List<Receiver> Receivers { get; set; } = new List<Receiver>();
     }
 
     public class Receiver : Device
     {
-        // Propiedades adicionales si es necesario
+        public int TransmitterId { get; set; }
+        public Transmitter Transmitter { get; set; }
     }
 }

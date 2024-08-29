@@ -1,59 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using VideoMatrix.Models;
 
 namespace VideoMatrix.Data
 {
-    public class DataAccess
+    public class VideoMatrixDbContext : DbContext
     {
-        private readonly string _connectionString;
+        public VideoMatrixDbContext(DbContextOptions<VideoMatrixDbContext> options) : base(options) { }
 
-        public DataAccess(string connectionString)
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            _connectionString = connectionString;
-        }
+            modelBuilder.Entity<Device>()
+                .HasDiscriminator<string>("DeviceType")
+                .HasValue<Transmitter>("Transmitter")
+                .HasValue<Receiver>("Receiver");
 
-        private SqlConnection GetConnection()
-        {
-            return new SqlConnection(_connectionString);
-        }
-
-        // Método para ejecutar consultas que retornan múltiples filas (SELECT)
-        public async Task<List<T>> ExecuteQueryAsync<T>(string query, Func<SqlDataReader, T> mapFunction)
-        {
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand(query, connection))
-            {
-                await connection.OpenAsync();
-                using (var reader = await command.ExecuteReaderAsync())
-                {
-                    var results = new List<T>();
-                    while (await reader.ReadAsync())
-                    {
-                        results.Add(mapFunction(reader));
-                    }
-                    return results;
-                }
-            }
-        }
-
-        // Método para ejecutar comandos INSERT, UPDATE, DELETE
-        public async Task ExecuteNonQueryAsync(string query, SqlParameter[]? parameters = null)
-        {
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand(query, connection))
-            {
-                if (parameters != null)
-                {
-                    command.Parameters.AddRange(parameters);
-                }
-
-                await connection.OpenAsync();
-                await command.ExecuteNonQueryAsync();
-            }
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

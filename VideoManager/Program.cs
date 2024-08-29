@@ -2,6 +2,7 @@ using VideoManager.Components;
 using VideoMatrix.Data; // Importa la clase DatabaseInitializer
 using VideoMatrix.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Agregar la cadena de conexión a los servicios
@@ -16,7 +17,7 @@ builder.Services.AddScoped<DeviceService>(provider =>
     return new DeviceService(connectionString); // Usa la misma cadena de conexión
 });
 
-// Add services to the container.
+// Agregar servicios al contenedor
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
@@ -29,10 +30,10 @@ using (var scope = app.Services.CreateScope())
     await initializer.InitializeAsync();  // Inicializar la base de datos y datos de prueba
 }
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline de solicitudes HTTP
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
 

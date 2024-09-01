@@ -2,7 +2,6 @@ using VideoManager.Components;
 using VideoMatrix.Data; // Importa la clase DatabaseInitializer
 using VideoMatrix.Services;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Agregar la cadena de conexión a los servicios
@@ -15,6 +14,12 @@ builder.Services.AddSingleton(new DatabaseInitializer(connectionString));
 builder.Services.AddScoped<DeviceService>(provider =>
 {
     return new DeviceService(connectionString); // Usa la misma cadena de conexión
+});
+
+// Registro de ProfileService
+builder.Services.AddScoped<ProfileService>(provider =>
+{
+    return new ProfileService(connectionString);
 });
 
 // Agregar servicios al contenedor

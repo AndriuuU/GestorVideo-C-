@@ -2,9 +2,9 @@ namespace VideoMatrix.Models
 {
     public enum DeviceStatus
     {
-        On,
-        Standby,
-        Off
+        Apagado,
+        Activo,
+        Esperando
     }
 
     public abstract class Device
@@ -26,4 +26,5 @@ namespace VideoMatrix.Models
         public int TransmitterId { get; set; }
         public Transmitter Transmitter { get; set; }
     }
+
 }

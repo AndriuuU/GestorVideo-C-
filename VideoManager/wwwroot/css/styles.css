@@ -1,0 +1,24 @@
+.device-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.grid-item {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    width: 200px;
+    text-align: center;
+}
+
+.grid-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}

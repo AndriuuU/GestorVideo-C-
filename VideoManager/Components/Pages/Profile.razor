@@ -1,0 +1,43 @@
+@page "/perfiles"
+@using VideoMatrix.Models
+@using VideoMatrix.Services
+@inject ProfileService ProfileService
+
+<h2 class="page-title">Gestión de Perfiles</h2>
+
+<div class="profiles-container">
+    <h3>Perfiles Existentes</h3>
+    @if (profiles == null)
+    {
+        <p class="loading-message">Cargando perfiles...</p>
+    }
+    else if (!profiles.Any())
+    {
+        <p>No hay perfiles creados.</p>
+    }
+    else
+    {
+        <ul class="profiles-list">
+            @foreach (var profile in profiles)
+            {
+                <li>@profile.Name</li>
+            }
+        </ul>
+    }
+</div>
+
+@code {
+    private List<Profil> profiles;  
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            profiles = await ProfileService.GetProfilesAsync();  
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar perfiles: {ex.Message}");
+        }
+    }
+}

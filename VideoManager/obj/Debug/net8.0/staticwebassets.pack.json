@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
+      "Id": "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\wwwroot\\css\\styles.css",
+      "PackagePath": "staticwebassets\\css\\styles.css"
+    },
+    {
       "Id": "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },

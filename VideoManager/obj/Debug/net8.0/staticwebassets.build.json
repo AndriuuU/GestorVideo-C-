@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "T27jDwkRmDNP8VhNsx11NZp5NXIvj+P5jdWPACKrWck=",
+  "Hash": "mnhhxESQvFtDoaXCJ2Aujcfr7jVDv99j1l6c8UdJJng=",
   "Source": "VideoManager",
   "BasePath": "_content/VideoManager",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\wwwroot\\css\\styles.css",
+      "SourceId": "VideoManager",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\wwwroot\\",
+      "BasePath": "_content/VideoManager",
+      "RelativePath": "css/styles.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\styles.css"
     },
     {
       "Identity": "C:\\Users\\andre\\OneDrive\\Documentos\\GitHub\\GestorVideo-C-\\VideoManager\\wwwroot\\favicon.png",

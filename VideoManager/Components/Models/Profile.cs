@@ -1,9 +1,9 @@
 namespace VideoMatrix.Models
 {
-    public class Profile
+    public class Profil
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Transmitter> Transmitters { get; set; } = new List<Transmitter>();
+        public int TransmitterId { get; set; }
     }
 }

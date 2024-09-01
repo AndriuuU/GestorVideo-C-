@@ -57,10 +57,14 @@ namespace VideoMatrix.Data
                 {
                     var seedDevicesCommand = new MySqlCommand(@"
                         INSERT INTO Devices (Name, IpAddress, Status, ImageUrl, DeviceType) VALUES
-                        ('Transmitter 1', '192.168.1.1', 1, 'https://via.placeholder.com/150', 'Transmitter'),
-                        ('Transmitter 2', '192.168.1.2', 2, 'https://via.placeholder.com/150', 'Transmitter'),
-                        ('Receiver 1', '192.168.1.3', 0, 'https://via.placeholder.com/150', 'Receiver'),
-                        ('Receiver 2', '192.168.1.4', 1, 'https://via.placeholder.com/150', 'Receiver');
+                            ('Transistor 1', '192.168.1.1', 1, 'https://hips.hearstapps.com/hmg-prod/images/the-fast-and-the-furious-toyota-supra-subasta-1624180933.jpg', 'Transmitter'),
+                            ('Transistor 2', '192.168.1.2', 2, 'https://www.motortrend.com/uploads/sites/25/2020/08/2000-Honda-Civic-Hatchback-Mugen-SS-Front-Lip.jpg', 'Transmitter'),
+                            ('Transistor 3', '192.168.1.5', 1, 'https://www.autopista.es/uploads/s1/57/19/14/4/article-mejores-coches-deportivos-mas-600-cv-564eed65dba25.jpeg', 'Transmitter'),
+                            ('Transistor 4', '192.168.1.6', 0, 'https://www.autopista.es/uploads/s1/57/19/14/4/article-mejores-coches-deportivos-mas-600-cv-564eed65dba25.jpeg', 'Transmitter'),
+                            ('Receptor 1', '192.168.1.3', 0, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/2019_Ford_Mustang_GT_Blue.jpg/250px-2019_Ford_Mustang_GT_Blue.jpg', 'Receiver'),
+                            ('Receptor 2', '192.168.1.4', 1, 'https://www.autopista.es/uploads/s1/57/19/14/4/article-mejores-coches-deportivos-mas-600-cv-564eed65dba25.jpeg', 'Receiver'),
+                            ('Receptor 3', '192.168.1.7', 1, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/2019_Ford_Mustang_GT_Blue.jpg/250px-2019_Ford_Mustang_GT_Blue.jpg', 'Receiver'),
+                            ('Receptor 4', '192.168.1.8', 0, 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/2019_Ford_Mustang_GT_Blue.jpg/250px-2019_Ford_Mustang_GT_Blue.jpg', 'Receiver');
                     ", connection);
                     await seedDevicesCommand.ExecuteNonQueryAsync();
                 }
@@ -72,7 +76,7 @@ namespace VideoMatrix.Data
                 if (profilesCount == 0)
                 {
                     var seedProfilesCommand = new MySqlCommand(@"
-                        INSERT INTO Profiles (Name) VALUES ('Default Profile');
+                        INSERT INTO Profiles (Name) VALUES ('Perfil predeterminado');
                     ", connection);
                     await seedProfilesCommand.ExecuteNonQueryAsync();
                 }

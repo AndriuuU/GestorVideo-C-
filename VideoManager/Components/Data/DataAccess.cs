@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ namespace VideoMatrix.Data
             return result;
         }
 
-        public async Task ExecuteNonQueryAsync(string query, MySqlParameter[] parameters)
+        public async Task ExecuteNonQueryAsync(string query, params MySqlParameter[] parameters)
         {
             using (var connection = new MySqlConnection(_connectionString))
             {
@@ -48,6 +49,31 @@ namespace VideoMatrix.Data
                     await command.ExecuteNonQueryAsync();
                 }
             }
+        }
+
+        public async Task<T> ExecuteQuerySingleAsync<T>(string query, MySqlParameter[] parameters, Func<MySqlDataReader, T> mapFunc)
+        {
+            T result = default;
+
+            using (var connection = new MySqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                using (var command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddRange(parameters);
+
+                    using (var reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            result = mapFunc(reader);
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

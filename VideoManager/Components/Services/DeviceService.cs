@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using VideoMatrix.Models;
 using VideoMatrix.Data;
-using MySql.Data.MySqlClient; // Asegúrate de que esta línea esté presente
+using MySql.Data.MySqlClient;
 
 namespace VideoMatrix.Services
 {
     public class DeviceService
     {
         private readonly DataAccess _dataAccess;
+        private readonly ProfileService _profileService;
+        private readonly TransmitterService _transmitterService;
 
         public DeviceService(string connectionString)
         {
             _dataAccess = new DataAccess(connectionString);
+            _profileService = new ProfileService(connectionString);
+            _transmitterService = new TransmitterService(connectionString);
         }
 
         public async Task<List<Device>> GetAllDevicesAsync()
@@ -24,14 +28,23 @@ namespace VideoMatrix.Services
 
         public async Task<List<Transmitter>> GetTransmittersAsync()
         {
-            string query = "SELECT * FROM Devices WHERE DeviceType = 'Transmitter'";
-            return await _dataAccess.ExecuteQueryAsync(query, reader => (Transmitter)MapToDevice(reader));
+            return await _transmitterService.GetTransmittersAsync(); // Utiliza el método de TransmitterService
         }
 
         public async Task<List<Receiver>> GetReceiversAsync()
         {
             string query = "SELECT * FROM Devices WHERE DeviceType = 'Receiver'";
             return await _dataAccess.ExecuteQueryAsync(query, reader => (Receiver)MapToDevice(reader));
+        }
+
+        public async Task<List<Profil>> GetProfilesAsync()
+        {
+            return await _profileService.GetProfilesAsync();
+        }
+
+        public async Task CreateProfileAsync(Profil profil)
+        {
+            await _profileService.AddProfileAsync(profil);
         }
 
         private Device MapToDevice(MySqlDataReader reader)
@@ -48,7 +61,7 @@ namespace VideoMatrix.Services
                 device = new Receiver();
             }
 
-            device.Id = (int)reader["Id"];
+            device.Id = Convert.ToInt32(reader["Id"]);
             device.Name = reader["Name"].ToString();
             device.IpAddress = reader["IpAddress"].ToString();
             device.Status = (DeviceStatus)Enum.Parse(typeof(DeviceStatus), reader["Status"].ToString());

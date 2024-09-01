@@ -19,15 +19,12 @@ namespace VideoMatrix.Data
             {
                 await connection.OpenAsync();
 
-                // Crear la base de datos si no existe
                 var createDbCommand = new MySqlCommand("CREATE DATABASE IF NOT EXISTS VideoMatrix;", connection);
                 await createDbCommand.ExecuteNonQueryAsync();
 
-                // Usar la base de datos
                 var useDbCommand = new MySqlCommand("USE VideoMatrix;", connection);
                 await useDbCommand.ExecuteNonQueryAsync();
 
-                // Crear la tabla Devices si no existe
                 var createTableCommand = new MySqlCommand(@"
                     CREATE TABLE IF NOT EXISTS Devices (
                         Id INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,16 +37,15 @@ namespace VideoMatrix.Data
                 ", connection);
                 await createTableCommand.ExecuteNonQueryAsync();
 
-                // Crear la tabla Profiles si no existe
                 var createProfilesTableCommand = new MySqlCommand(@"
                     CREATE TABLE IF NOT EXISTS Profiles (
                         Id INT PRIMARY KEY AUTO_INCREMENT,
-                        Name VARCHAR(100) NOT NULL
+                        Name VARCHAR(100) NOT NULL,
+                        TransmitterIds VARCHAR(100)
                     );
                 ", connection);
                 await createProfilesTableCommand.ExecuteNonQueryAsync();
 
-                // Insertar datos de prueba en Devices
                 var checkDevicesCommand = new MySqlCommand("SELECT COUNT(*) FROM Devices;", connection);
                 var devicesCount = Convert.ToInt32(await checkDevicesCommand.ExecuteScalarAsync());
 
@@ -69,14 +65,15 @@ namespace VideoMatrix.Data
                     await seedDevicesCommand.ExecuteNonQueryAsync();
                 }
 
-                // Insertar datos de prueba en Profiles
                 var checkProfilesCommand = new MySqlCommand("SELECT COUNT(*) FROM Profiles;", connection);
                 var profilesCount = Convert.ToInt32(await checkProfilesCommand.ExecuteScalarAsync());
 
                 if (profilesCount == 0)
                 {
                     var seedProfilesCommand = new MySqlCommand(@"
-                        INSERT INTO Profiles (Name) VALUES ('Perfil predeterminado');
+                        INSERT INTO Profiles (Name) VALUES
+                            ('Perfil predeterminado 1'),
+                            ('Perfil predeterminado 3');
                     ", connection);
                     await seedProfilesCommand.ExecuteNonQueryAsync();
                 }

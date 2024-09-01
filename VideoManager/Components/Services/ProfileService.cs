@@ -16,13 +16,13 @@ namespace VideoMatrix.Services
             _dataAccess = new DataAccess(connectionString);
         }
 
-        public async Task<List<Profil>> GetProfilesAsync()  // Cambia Profile a Profil
+        public async Task<List<Profil>> GetProfilesAsync()  
         {
             string query = "SELECT * FROM Profiles";
             return await _dataAccess.ExecuteQueryAsync(query, MapToProfile);
         }
 
-        public async Task<Profil> GetProfileByIdAsync(int id)  // Cambia Profile a Profil
+        public async Task<Profil> GetProfileByIdAsync(int id)  
         {
             string query = "SELECT * FROM Profiles WHERE Id = @Id";
             var parameters = new MySqlParameter[] { new MySqlParameter("@Id", id) };
@@ -36,13 +36,13 @@ namespace VideoMatrix.Services
             await _dataAccess.ExecuteNonQueryAsync(query, parameters);
         }
 
-        private Profil MapToProfile(MySqlDataReader reader)  // Cambia Profile a Profil
+        private Profil MapToProfile(MySqlDataReader reader)  
         {
             return new Profil
             {
                 Id = Convert.ToInt32(reader["Id"]),
                 Name = reader["Name"].ToString(),
-                TransmitterId = Convert.ToInt32(reader["TransmitterId"])
+                TransmitterIds = new List<int>() 
             };
         }
     }

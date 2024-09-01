@@ -4,6 +4,6 @@ namespace VideoMatrix.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int TransmitterId { get; set; }
+        public List<int> TransmitterIds { get; set; } = new List<int>(); 
     }
 }

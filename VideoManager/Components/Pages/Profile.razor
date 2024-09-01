@@ -2,42 +2,136 @@
 @using VideoMatrix.Models
 @using VideoMatrix.Services
 @inject ProfileService ProfileService
+@inject DeviceService DeviceService
 
 <h2 class="page-title">Gestión de Perfiles</h2>
 
 <div class="profiles-container">
-    <h3>Perfiles Existentes</h3>
-    @if (profiles == null)
-    {
-        <p class="loading-message">Cargando perfiles...</p>
-    }
-    else if (!profiles.Any())
-    {
-        <p>No hay perfiles creados.</p>
-    }
-    else
-    {
-        <ul class="profiles-list">
-            @foreach (var profile in profiles)
-            {
-                <li>@profile.Name</li>
-            }
-        </ul>
-    }
+    <div class="existing-profiles">
+        <h3>Perfiles Existentes</h3>
+        @if (profiles == null)
+        {
+            <p class="loading-message">Cargando perfiles...</p>
+        }
+        else if (!profiles.Any())
+        {
+            <p>No hay perfiles creados.</p>
+        }
+        else
+        {
+            <ul class="profiles-list">
+                @foreach (var profile in profiles)
+                {
+                    <li @onclick="() => LoadTransmitters(profile.TransmitterIds)">
+                        @profile.Name
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+
+    <div class="create-profile">
+        <h3>Transmisores del Perfil Seleccionado</h3>
+        @if (selectedTransmitters == null)
+        {
+            <p class="loading-message">Seleccione un perfil para ver los transmisores.</p>
+        }
+        else if (!selectedTransmitters.Any())
+        {
+            <p>No hay transmisores asociados a este perfil.</p>
+        }
+        else
+        {
+            <ul class="profiles-list">
+                @foreach (var transmitter in selectedTransmitters)
+                {
+                    <li>@transmitter.Name</li>
+                }
+            </ul>
+        }
+    </div>
 </div>
 
+<style>
+       .page-title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #333;
+    }
+
+    .profiles-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 32px;
+        padding: 16px;
+    }
+
+    .existing-profiles, .create-profile {
+        width: 45%;
+    }
+
+    .loading-message {
+        font-size: 1.5rem;
+        text-align: center;
+        color: #e67e22;
+        margin-top: 2rem;
+    }
+
+    .profiles-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .profiles-list li {
+        margin-bottom: 8px;
+        padding: 8px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .btn {
+        margin-top: 1rem;
+    }
+</style>
+
 @code {
-    private List<Profil> profiles;  
+    private List<Profil> profiles;
+    private List<Transmitter> selectedTransmitters;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            profiles = await ProfileService.GetProfilesAsync();  
+            profiles = await ProfileService.GetProfilesAsync();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error al cargar perfiles: {ex.Message}");
+        }
+    }
+
+    private async Task LoadTransmitters(List<int> transmitterIds)
+    {
+        try
+        {
+            selectedTransmitters = await DeviceService.GetTransmittersByIdsAsync(transmitterIds);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar transmisores: {ex.Message}");
         }
     }
 }

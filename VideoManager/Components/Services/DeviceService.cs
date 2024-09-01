@@ -46,7 +46,29 @@ namespace VideoMatrix.Services
         {
             await _profileService.AddProfileAsync(profil);
         }
+ public async Task<List<Transmitter>> GetTransmittersByIdsAsync(IEnumerable<int> transmitterIds)
+        {
+            if (transmitterIds == null || !transmitterIds.Any())
+                return new List<Transmitter>();
 
+            string ids = string.Join(",", transmitterIds);
+            string query = $"SELECT * FROM Transmitters WHERE Id IN ({ids})";
+
+            return await _dataAccess.ExecuteQueryAsync(query, MapToTransmitter);
+        }
+
+        private Transmitter MapToTransmitter(MySqlDataReader reader)
+        {
+            return new Transmitter
+            {
+                Id = Convert.ToInt32(reader["Id"]),
+                Name = reader["Name"].ToString(),
+                IpAddress = reader["IpAddress"].ToString(),
+                Status = (DeviceStatus)Enum.Parse(typeof(DeviceStatus), reader["Status"].ToString()),
+                ImageUrl = reader["ImageUrl"].ToString()
+            };
+        }
+        
         private Device MapToDevice(MySqlDataReader reader)
         {
             var deviceType = reader["DeviceType"].ToString();
